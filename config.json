@@ -1,0 +1,547 @@
+{
+    "groups": {
+        "books": {
+            "per_user": 5,
+            "simultaneously": 30
+        },
+        "manga": {
+            "per_user": 1,
+            "simultaneously": 1
+        },
+        "ranobe": {
+            "per_user": 2,
+            "simultaneously": 10
+        },
+        "jaomix": {
+            "per_user": 1,
+            "simultaneously": 3
+        },
+        "wuxiaworld": {
+            "per_user": 0,
+            "simultaneously": 0
+        }
+    },
+    "sites": {
+		"acomics.ru": {
+            "active": true,
+            "parameters": ["paging","force_images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "manga",
+            "pause_by_user": 0
+        },
+		"author.today": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"bigliba.com": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"bookinbook.ru": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"bookinist.pw": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"booknet.com": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": "193.201.115.46:3128",
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"booknet.ua": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": "193.201.115.46:3128",
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"bookriver.ru": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"bookstab.ru": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"dark-novels.ru": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"dreame.com": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"eznovels.com": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"fb2.top": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"ficbook.net": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"fictionbook.ru": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"hentailib.me": {
+            "active": true,
+            "parameters": ["paging","force_images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "manga",
+            "pause_by_user": 0
+        },
+		"hogwartsnet.ru": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"hotnovelpub.com": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"hub-book.com": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"i-gram.ru": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"ifreedom.su": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"jaomix.ru": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "jaomix",
+            "pause_by_user": 30
+        },
+		"ladylib.top": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"lanovels.com": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"libbox.ru": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"libst.ru": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"lightnoveldaily.com": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"litgorod.ru": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"litmarket.ru": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"litmir.me": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"litnet.com": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": "193.201.115.46:3128",
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"litres.ru": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"manga.ovh": {
+            "active": true,
+            "parameters": ["paging","force_images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "manga",
+            "pause_by_user": 0
+        },
+		"mangalib.me": {
+            "active": true,
+            "parameters": ["paging","force_images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "manga",
+            "pause_by_user": 0
+        },
+		"mir-knig.com": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"mybook.ru": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"noveltranslate.com": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"novelxo.com": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"online-knigi.com.ua": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"prodaman.ru": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"ranobe-novels.ru": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"ranobe.ovh": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"ranobehub.org": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"ranobelib.me": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"ranobes.com": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"readli.net": {
+            "active": true,
+            "parameters": ["images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"readmanga.live": {
+            "active": true,
+            "parameters": ["paging","force_images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "manga",
+            "pause_by_user": 0
+        },
+		"remanga.org": {
+            "active": true,
+            "parameters": ["paging","force_images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "manga",
+            "pause_by_user": 0
+        },
+		"renovels.org": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": "193.201.115.46:3128",
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"royalroad.com": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"ru.novelxo.com": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"samlib.ru": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"tl.rulate.ru": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"topliba.com": {
+            "active": true,
+            "parameters": ["paging","images","auth"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"twilightrussia.ru": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        },
+		"wattpad.com": {
+            "active": true,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "ranobe",
+            "pause_by_user": 0
+        },
+		"wuxiaworld.ru": {
+            "active": false,
+            "parameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 0,
+            "per_user": 0,
+            "group": "wuxiawaord",
+            "pause_by_user": 0
+        },
+		"xn--80ac9aeh6f.xn--p1ai": {
+            "alloparameters": ["paging","images"],
+            "proxy": false,
+            "simultaneously": 1,
+            "per_user": 1,
+            "group": "books",
+            "pause_by_user": 0
+        }
+	}
+}
