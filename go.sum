@@ -1,3 +1,5 @@
+github.com/RedBuld/book_bot_database v1.0.0 h1:QcQDTWjX/zP2TRPlwrd2pMO45PdEICayhyPtCjG3R+w=
+github.com/RedBuld/book_bot_database v1.0.0/go.mod h1:XfsVG/Fh8CXnY6vGEptkOdPNg6bFv7G7R/zyktrcJ+8=
 github.com/RedBuld/book_bot_rmq v1.0.5 h1:02IEQZ0lfw7nBdXXcyd4uUXHn0XrsqOu9QkyMwrh0/Y=
 github.com/RedBuld/book_bot_rmq v1.0.5/go.mod h1:w0F1tHDQTEUX6ZGLOigFsTa2Majv2/+OcyJSAeYs6TI=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

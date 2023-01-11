@@ -1,4 +1,4 @@
-package database
+package main
 
 type Task struct {
 	id         int64  // 123456789

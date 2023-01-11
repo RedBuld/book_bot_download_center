@@ -8,15 +8,15 @@ import (
 	"os"
 	"time"
 
-	bdb "github.com/RedBuld/book_bot_download_center/database"
-	bbr "github.com/RedBuld/book_bot_rmq"
+	book_bot_database "github.com/RedBuld/book_bot_database"
+	book_bot_rmq "github.com/RedBuld/book_bot_rmq"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 type DownloadCenter struct {
-	rmq    *bbr.RMQ_Session
+	rmq    *book_bot_rmq.RMQ_Session
 	logger *log.Logger
-	db     *bdb.DB_Session
+	db     *book_bot_database.DB_Session
 	queue  *Queue
 	done   chan bool
 }
@@ -48,37 +48,37 @@ func main() {
 	time.Sleep(5 * time.Second)
 }
 
-func (DC *DownloadCenter) initRMQ() *bbr.RMQ_Session {
-	params := &bbr.RMQ_Params{
+func (DC *DownloadCenter) initRMQ() *book_bot_rmq.RMQ_Session {
+	params := &book_bot_rmq.RMQ_Params{
 		Server: "amqp://guest:guest@localhost:5672/",
-		Queue: &bbr.RMQ_Params_Queue{
+		Queue: &book_bot_rmq.RMQ_Params_Queue{
 			Name:    "elib_fb2_downloads",
 			Durable: true,
 			// AutoAck: true,
 		},
-		Exchange: &bbr.RMQ_Params_Exchange{
+		Exchange: &book_bot_rmq.RMQ_Params_Exchange{
 			Name:       "download_requests",
 			Mode:       "topic",
 			RoutingKey: "*",
 			Durable:    true,
 		},
-		Prefetch: &bbr.RMQ_Params_Prefetch{
+		Prefetch: &book_bot_rmq.RMQ_Params_Prefetch{
 			Count:  1,
 			Size:   0,
 			Global: false,
 		},
 		Consumer: DC.onMessage,
 	}
-	rmq := bbr.NewRMQ(params)
+	rmq := book_bot_rmq.NewRMQ(params)
 
 	return rmq
 }
 
-func (DC *DownloadCenter) initDB() *bdb.DB_Session {
-	params := &bdb.DB_Params{
+func (DC *DownloadCenter) initDB() *book_bot_database.DB_Session {
+	params := &book_bot_database.DB_Params{
 		Server: "postgres://postgres:secret@localhost:5432/download-center",
 	}
-	db := bdb.NewDB(params)
+	db := book_bot_database.NewDB(params)
 
 	return db
 }
@@ -123,7 +123,7 @@ func (DC *DownloadCenter) onMessage(message amqp.Delivery) {
 // func (DC *DownloadCenter) SendStatus(RoutingKey string) {
 // 	fmt.Println("Sending download status")
 
-// 	message := &bbr.RMQ_Message{
+// 	message := &book_bot_rmq.RMQ_Message{
 // 		Exchange:   "download_statuses",
 // 		RoutingKey: RoutingKey,
 // 		Mandatory:  false,
