@@ -32,6 +32,7 @@ const (
 
 var (
 	errAlreadyClosed = errors.New("already closed: not connected to the server")
+	errShutdown      = errors.New("session is shutting down")
 )
 
 func NewDB(params *DB_Params) *DB_Session {
@@ -121,6 +122,33 @@ func (session *DB_Session) ping() error {
 		return err
 	}
 	return nil
+}
+
+func (session *DB_Session) GetConnection() (*pgxpool.Conn, error) {
+	for {
+		conn, err := session.getConnection()
+		if err != nil {
+			session.logger.Println("Push failed. Retrying...")
+			select {
+			case <-session.done:
+				return nil, errShutdown
+			case <-time.After(reconnectDelay):
+			}
+			continue
+		}
+		return conn, nil
+	}
+}
+
+func (session *DB_Session) getConnection() (*pgxpool.Conn, error) {
+	if !session.isReady {
+		return nil, errAlreadyClosed
+	}
+	conn, err := session.pool.Acquire(context.Background())
+	if err != nil {
+		return nil, err
+	}
+	return conn, nil
 }
 
 func (session *DB_Session) Close() error {
