@@ -1,0 +1,3 @@
+{
+    "server": "postgres://postgres:secret@localhost:5432/download-center"
+}

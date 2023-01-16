@@ -1,18 +1,16 @@
 package main
 
-type Queue struct {
-	config  *QueueConfig
-	waiting []QueueTask
-	active  []QueueTask
-}
+import (
+	"log"
 
-type QueueTask struct {
-	//
-}
+	book_bot_database "github.com/RedBuld/book_bot_database"
+	book_bot_rmq "github.com/RedBuld/book_bot_rmq"
+)
 
 type QueueConfig struct {
-	Groups map[string]QueueConfig_Group `json:"groups"`
-	Sites  map[string]QueueConfig_Site  `json:"sites"`
+	Groups     map[string]QueueConfig_Group `json:"groups"`
+	Sites      map[string]QueueConfig_Site  `json:"sites"`
+	ExecFolder string                       `json:"exec_folder"`
 }
 
 type QueueConfig_Group struct {
@@ -30,13 +28,38 @@ type QueueConfig_Site struct {
 	PauseByUser    int      `json:"pause_by_user"`
 }
 
+type DownloadCenter struct {
+	rmq    *book_bot_rmq.RMQ_Session
+	logger *log.Logger
+	db     *book_bot_database.DB_Session
+	queue  *Queue
+	done   chan bool
+}
+
+type Queue struct {
+	config  *QueueConfig
+	waiting []QueueTask
+	active  []QueueTask
+}
+
+type QueueTask struct {
+	id         int
+	payload    *DownloadRequest
+	downloader *Downloader
+}
+
+type Downloader struct {
+	payload  *DownloadRequest
+	log_file string
+}
+
 type DownloadRequest struct {
 	userId    int64  `json:"user_id"`    // 123456789
 	botId     string `json:"bot_id"`     // c1
 	chatId    int64  `json:"chat_id"`    // 123456789
 	messageId int64  `json:"message_id"` // 1200
 	site      string `json:"site"`       // tl.rulate.ru
-	url       string `json:"url"`        // https://tl.rulate.ru/book/71637
+	url       string `json:"url"`        // https://tl.rulate.ru/book/7path
 	start     int    `json:"start"`      // 0
 	end       int    `json:"end"`        // 100
 	format    string `json:"format"`     // fb2 [fb2|epub|cbz|mobi|azw3]
@@ -48,7 +71,9 @@ type DownloadRequest struct {
 }
 
 type DownloadStatus struct {
-	Id    string // BOT_ID:CHAT_ID:MESSAGE_ID
-	Text  string // Загружаю главу ...
-	Files []string
+	botId     string   `json:"bot_id"`     // c1
+	chatId    int64    `json:"chat_id"`    // 123456789
+	messageId int64    `json:"message_id"` // 1200
+	Text      string   `json:"string"`     // Загружаю главу ...
+	Files     []string `json:"files"`
 }

@@ -1,9 +1,7 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"time"
@@ -12,14 +10,6 @@ import (
 	book_bot_rmq "github.com/RedBuld/book_bot_rmq"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
-
-type DownloadCenter struct {
-	rmq    *book_bot_rmq.RMQ_Session
-	logger *log.Logger
-	db     *book_bot_database.DB_Session
-	queue  *Queue
-	done   chan bool
-}
 
 var DC *DownloadCenter
 
@@ -37,81 +27,36 @@ func main() {
 	defer db.Close()
 	DC.db = db
 
-	config := parseConfigFromFile("config.json")
-	queue := &Queue{
-		config: config,
-	}
-	DC.queue = queue
+	queue := DC.initQueue()
 	defer DC.stopQueue()
-	go DC.startQueue()
+	DC.queue = queue
 
-	time.Sleep(5 * time.Second)
+	forever := make(chan bool)
+	go DC.startQueue()
+	// time.Sleep(5 * time.Second)
+	<-forever
 }
 
 func (DC *DownloadCenter) initRMQ() *book_bot_rmq.RMQ_Session {
-	params := &book_bot_rmq.RMQ_Params{
-		Server: "amqp://guest:guest@localhost:5672/",
-		Queue: &book_bot_rmq.RMQ_Params_Queue{
-			Name:    "elib_fb2_downloads",
-			Durable: true,
-			// AutoAck: true,
-		},
-		Exchange: &book_bot_rmq.RMQ_Params_Exchange{
-			Name:       "download_requests",
-			Mode:       "topic",
-			RoutingKey: "*",
-			Durable:    true,
-		},
-		Prefetch: &book_bot_rmq.RMQ_Params_Prefetch{
-			Count:  1,
-			Size:   0,
-			Global: false,
-		},
-		Consumer: DC.onMessage,
-	}
-	rmq := book_bot_rmq.NewRMQ(params)
+	config := DC.parseRMQConfig("configs/rabbitmq.json")
+	config.Consumer = DC.onMessage
+	rmq := book_bot_rmq.NewRMQ(config)
 
 	return rmq
 }
 
 func (DC *DownloadCenter) initDB() *book_bot_database.DB_Session {
-	params := &book_bot_database.DB_Params{
-		Server: "postgres://postgres:secret@localhost:5432/download-center",
-	}
-	db := book_bot_database.NewDB(params)
+	config := DC.parseDBConfig("configs/database.json")
+	db := book_bot_database.NewDB(config)
 
 	return db
 }
 
-func parseConfigFromFile(filepath string) *QueueConfig {
-	config := QueueConfig{}
-	// var config map[string]interface{}
+func (DC *DownloadCenter) initQueue() *Queue {
+	config := DC.parseQueueConfig("configs/queue.json")
+	queue := DC.newQueue(config)
 
-	jsonFile, _ := os.Open(filepath)
-	defer jsonFile.Close()
-
-	byteValue, _ := ioutil.ReadAll(jsonFile)
-
-	json.Unmarshal([]byte(byteValue), &config)
-
-	return &config
-}
-
-func (DC *DownloadCenter) startQueue() {
-	DC.logger.Println("Starting Queue")
-	for {
-		select {
-		case <-DC.done:
-			return
-		case <-time.After(1 * time.Second):
-		}
-		DC.logger.Println("Queue step")
-	}
-}
-
-func (DC *DownloadCenter) stopQueue() {
-	DC.logger.Println("Stopping Queue")
-	DC.done <- true
+	return queue
 }
 
 func (DC *DownloadCenter) onMessage(message amqp.Delivery) {

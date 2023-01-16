@@ -1,0 +1,18 @@
+{
+    "server": "amqp://guest:guest@localhost:5672/",
+    "queue": {
+        "name": "elib_fb2_downloads",
+        "durable": true
+    },
+    "exchange": {
+        "name": "download_requests",
+        "mode": "topic",
+        "routing_key": "*",
+        "durable": true
+    },
+    "prefetch": {
+        "count": 1,
+        "size": 0,
+        "global": false
+    }
+}
