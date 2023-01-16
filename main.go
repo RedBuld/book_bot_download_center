@@ -1,10 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
-	"time"
 
 	book_bot_database "github.com/RedBuld/book_bot_database"
 	book_bot_rmq "github.com/RedBuld/book_bot_rmq"
@@ -32,7 +32,7 @@ func main() {
 	DC.queue = queue
 
 	forever := make(chan bool)
-	go DC.startQueue()
+	// go DC.startQueue()
 	// time.Sleep(5 * time.Second)
 	<-forever
 }
@@ -60,29 +60,47 @@ func (DC *DownloadCenter) initQueue() *Queue {
 }
 
 func (DC *DownloadCenter) onMessage(message amqp.Delivery) {
-	fmt.Printf("[%s] Message [%s]: %s\n", time.Now(), message.RoutingKey, message.Body)
+	// fmt.Printf("[%s] Message [%s]: %s\n", time.Now(), message.RoutingKey, message.Body)
+	var request DownloadRequest
+
+	json.Unmarshal(message.Body, &request)
+	fmt.Printf("Received download request:\n%+v\n", request)
+
 	message.Ack(false)
-	// DC.SendStatus(message.RoutingKey)
+	go DC.SendStatus(request.BotId, request.ChatId, request.MessageId)
 }
 
-// func (DC *DownloadCenter) SendStatus(RoutingKey string) {
-// 	fmt.Println("Sending download status")
+func (DC *DownloadCenter) SendStatus(bot_id string, chat_id int64, message_id int64) {
+	fmt.Println("Sending download status")
 
-// 	message := &book_bot_rmq.RMQ_Message{
-// 		Exchange:   "download_statuses",
-// 		RoutingKey: RoutingKey,
-// 		Mandatory:  false,
-// 		Immediate:  false,
-// 		Params: amqp.Publishing{
-// 			DeliveryMode: amqp.Persistent,
-// 			ContentType:  "text/plain",
-// 			Body:         []byte("Download accepted"),
-// 		},
-// 	}
-// 	err := DC.rmq.Push(message)
-// 	if err != nil {
-// 		panic(err)
-// 	}
+	status := DownloadStatus{
+		BotId:     bot_id,
+		ChatId:    chat_id,
+		MessageId: message_id,
+		Text:      "Download accepted",
+		Files:     nil,
+	}
 
-// 	fmt.Println("Sended download status")
-// }
+	msg, err := json.Marshal(status)
+	if err != nil {
+		panic(err)
+	}
+
+	message := &book_bot_rmq.RMQ_Message{
+		Exchange:   "download_statuses",
+		RoutingKey: bot_id,
+		Mandatory:  false,
+		Immediate:  false,
+		Params: amqp.Publishing{
+			DeliveryMode: amqp.Persistent,
+			ContentType:  "text/plain",
+			Body:         msg,
+		},
+	}
+	err = DC.rmq.Push(message)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Sended download status")
+}

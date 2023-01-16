@@ -1,7 +1,7 @@
 {
     "server": "amqp://guest:guest@localhost:5672/",
     "queue": {
-        "name": "elib_fb2_downloads",
+        "name": "elib_fb2_download_requests",
         "durable": true
     },
     "exchange": {
