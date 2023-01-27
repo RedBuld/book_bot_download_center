@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	book_bot_database "github.com/RedBuld/book_bot_database"
 	book_bot_rmq "github.com/RedBuld/book_bot_rmq"
@@ -37,15 +38,36 @@ type DownloadCenter struct {
 }
 
 type Queue struct {
-	config  *QueueConfig
-	waiting []QueueTask
-	active  []QueueTask
+	config        *QueueConfig
+	logger        *log.Logger
+	waiting       []WaitingQueueTask
+	active        []RunningQueueTask
+	checkInterval time.Duration
+	done          chan RunningQueueTask
 }
 
-type QueueTask struct {
+type QueueGroup struct {
+	Name           string
+	PerUser        int
+	Simultaneously int
+	Running        int
+}
+
+func (qd *QueueGroup) CanStart() bool {
+	return qd.Running < qd.Simultaneously
+}
+
+type WaitingQueueTask struct {
+	TaskId int64
+	UserId int64
+	Site   string
+}
+
+type RunningQueueTask struct {
 	Id         int
 	Payload    *DownloadRequest
 	Downloader *Downloader
+	done       *chan RunningQueueTask
 }
 
 type Downloader struct {

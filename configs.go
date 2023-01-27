@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"os"
 
 	book_bot_database "github.com/RedBuld/book_bot_database"
@@ -15,7 +15,7 @@ func (DC *DownloadCenter) parseRMQConfig(filepath string) *book_bot_rmq.RMQ_Para
 	jsonFile, _ := os.Open(filepath)
 	defer jsonFile.Close()
 
-	byteValue, _ := ioutil.ReadAll(jsonFile)
+	byteValue, _ := io.ReadAll(jsonFile)
 
 	json.Unmarshal([]byte(byteValue), &config)
 
@@ -28,7 +28,7 @@ func (DC *DownloadCenter) parseDBConfig(filepath string) *book_bot_database.DB_P
 	jsonFile, _ := os.Open(filepath)
 	defer jsonFile.Close()
 
-	byteValue, _ := ioutil.ReadAll(jsonFile)
+	byteValue, _ := io.ReadAll(jsonFile)
 
 	json.Unmarshal([]byte(byteValue), &config)
 
@@ -41,7 +41,7 @@ func (DC *DownloadCenter) parseQueueConfig(filepath string) *QueueConfig {
 	jsonFile, _ := os.Open(filepath)
 	defer jsonFile.Close()
 
-	byteValue, _ := ioutil.ReadAll(jsonFile)
+	byteValue, _ := io.ReadAll(jsonFile)
 
 	json.Unmarshal([]byte(byteValue), &config)
 

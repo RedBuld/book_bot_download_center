@@ -19,21 +19,20 @@ func main() {
 		done:   make(chan bool),
 	}
 
-	rmq := DC.initRMQ()
-	defer rmq.Close()
-	DC.rmq = rmq
+	// rmq := DC.initRMQ()
+	// defer rmq.Close()
+	// DC.rmq = rmq
 
-	db := DC.initDB()
-	defer db.Close()
-	DC.db = db
+	// db := DC.initDB()
+	// defer db.Close()
+	// DC.db = db
 
 	queue := DC.initQueue()
-	defer DC.stopQueue()
+	defer queue.stopQueue()
 	DC.queue = queue
 
 	forever := make(chan bool)
-	// go DC.startQueue()
-	// time.Sleep(5 * time.Second)
+	go queue.startQueue()
 	<-forever
 }
 
