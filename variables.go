@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -8,10 +9,34 @@ import (
 	book_bot_rmq "github.com/RedBuld/book_bot_rmq"
 )
 
+type DownloadCenter struct {
+	rmq    *book_bot_rmq.RMQ_Session
+	logger *log.Logger
+	db     *book_bot_database.DB_Session
+	queue  *Queue
+	done   chan bool
+}
+
+type Queue struct {
+	/// config *QueueConfig
+	logger *log.Logger
+	// realtime stats
+	groups map[string]*QueueStats_Group
+	sites  map[string]*QueueStats_Site
+	users  map[int64]*QueueStats_User
+	// tasks
+	waiting map[int64]*WaitingQueueTask
+	active  map[int64]*RunningQueueTask
+	// base
+	checkInterval time.Duration
+	done          chan bool
+	task          chan int64
+}
+
 type QueueConfig struct {
-	Groups     map[string]QueueConfig_Group `json:"groups"`
-	Sites      map[string]QueueConfig_Site  `json:"sites"`
-	ExecFolder string                       `json:"exec_folder"`
+	Groups     map[string]*QueueConfig_Group `json:"groups"`
+	Sites      map[string]*QueueConfig_Site  `json:"sites"`
+	ExecFolder string                        `json:"exec_folder"`
 }
 
 type QueueConfig_Group struct {
@@ -29,50 +54,58 @@ type QueueConfig_Site struct {
 	PauseByUser    int      `json:"pause_by_user"`
 }
 
-type DownloadCenter struct {
-	rmq    *book_bot_rmq.RMQ_Session
-	logger *log.Logger
-	db     *book_bot_database.DB_Session
-	queue  *Queue
-	done   chan bool
-}
-
-type Queue struct {
-	config        *QueueConfig
-	logger        *log.Logger
-	waiting       []WaitingQueueTask
-	active        []RunningQueueTask
-	checkInterval time.Duration
-	done          chan RunningQueueTask
-}
-
-type QueueGroup struct {
+type QueueStats_Group struct {
 	Name           string
 	PerUser        int
 	Simultaneously int
 	Running        int
 }
 
-func (qd *QueueGroup) CanStart() bool {
+func (qd *QueueStats_Group) CanStart() bool {
 	return qd.Running < qd.Simultaneously
+}
+
+type QueueStats_Site struct {
+	Name           string
+	Group          string
+	PerUser        int
+	Simultaneously int
+	Running        int
+}
+
+func (qs *QueueStats_Site) CanStart() bool {
+	return qs.Running < qs.Simultaneously
+}
+
+type QueueStats_User struct {
+	Total  int
+	BySite map[string]int
 }
 
 type WaitingQueueTask struct {
 	TaskId int64
 	UserId int64
 	Site   string
+	Group  string
 }
 
 type RunningQueueTask struct {
-	Id         int
-	Payload    *DownloadRequest
+	TaskId     int64
 	Downloader *Downloader
-	done       *chan RunningQueueTask
+	done       *chan int64
+}
+
+func (rqt *RunningQueueTask) Done() {
+	fmt.Println("task done")
+	*rqt.done <- rqt.TaskId
 }
 
 type Downloader struct {
 	Payload *DownloadRequest
 	Log     string
+}
+
+func (d *Downloader) Start() {
 }
 
 type DownloadRequest struct {
