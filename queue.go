@@ -132,6 +132,12 @@ func (q *Queue) maybeStartTask(taskId int64) {
 				return
 			}
 		}
+	} else {
+		user := &QueueStats_User{
+			Total:  0,
+			BySite: make(map[string]int),
+		}
+		q.users[task.UserId] = user
 	}
 	q.startTask(task)
 }
